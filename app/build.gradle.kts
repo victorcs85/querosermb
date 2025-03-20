@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+}
+
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
 }
 
 android {
@@ -16,6 +22,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "TOKEN_KEY",
+            "\"${localProperties["TOKEN_KEY"]}\""
+        )
     }
 
     buildTypes {
@@ -27,6 +39,7 @@ android {
             )
         }
     }
+    android.buildFeatures.buildConfig = true
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -84,6 +97,12 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.4.0")
     implementation("io.insert-koin:koin-androidx-compose:3.4.6")
     implementation("io.insert-koin:koin-androidx-compose-navigation:3.4.6")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
+    implementation("com.squareup.moshi:moshi-adapters:1.11.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
