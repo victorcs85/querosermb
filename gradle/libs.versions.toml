@@ -9,7 +9,6 @@ appcompat = "1.7.0"
 lifecycleExtensions = "2.2.0"
 lifecycleRuntimeKtx = "2.8.7"
 material = "1.12.0"
-koin-bom = "4.0.2"
 mockwebserver = "4.12.0"
 multidex = "2.0.1"
 navigationUi = "2.8.9"
@@ -45,6 +44,3 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
-

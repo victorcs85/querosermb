@@ -11,10 +11,12 @@ import br.com.victorcs.querosermb.data.source.remote.repository.ExchangeReposito
 import br.com.victorcs.querosermb.domain.mapper.DomainMapper
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.domain.repository.IExchangeRepository
+import br.com.victorcs.querosermb.presentation.exchanges.ui.ExchangesViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -70,6 +72,13 @@ class CoinInitialization : ModuleInitialization() {
     //endregion
 
     //region ViewModels
+    private val viewModelsModule = module {
+        viewModel {
+            ExchangesViewModel(
+                repository = get()
+            )
+        }
+    }
     //endregion
 
     override fun init(): List<Module> = listOf(
@@ -78,6 +87,7 @@ class CoinInitialization : ModuleInitialization() {
         mappersModule,
         networkModule,
         serviceModule,
-        interceptorModule
+        interceptorModule,
+        viewModelsModule
     )
 }

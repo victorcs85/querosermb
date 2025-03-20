@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface CoinAPI {
     @GET("v1/exchanges")
-    suspend fun getExchanges(): ExchangeResponse
+    suspend fun getExchanges(): List<ExchangeResponse>
 }

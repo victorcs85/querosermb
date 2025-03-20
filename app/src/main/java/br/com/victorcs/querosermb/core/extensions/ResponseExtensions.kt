@@ -6,7 +6,7 @@ import br.com.victorcs.querosermb.domain.model.Response
 fun <T> List<T>.asSuccessResponse(): Response<List<T>> = Response.Success(this)
 
 fun <T> Throwable.asFailureResponse(): Response<T> =
-    Response.Failure(this.message ?: UNKNOWN_ERROR)
+    Response.Error(this.message ?: UNKNOWN_ERROR)
 
 inline fun <T> Response<T>.onSuccess(action: (T) -> Unit): Response<T> {
     if (this is Response.Success) {
@@ -16,7 +16,7 @@ inline fun <T> Response<T>.onSuccess(action: (T) -> Unit): Response<T> {
 }
 
 inline fun <T> Response<T>.onFailure(action: (String) -> Unit): Response<T> {
-    if (this is Response.Failure) {
+    if (this is Response.Error) {
         action(this.errorMessage)
     }
     return this
