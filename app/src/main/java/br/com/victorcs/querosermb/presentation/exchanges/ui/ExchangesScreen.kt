@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -51,8 +52,10 @@ import org.koin.androidx.compose.koinViewModel
 fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel = koinViewModel()) {
     val state = viewModel.screenState.collectAsStateWithLifecycle().value
 
-    LaunchedEffect(Unit) {
-        viewModel.execute(ExchangesCommand.FetchExchanges)
+    LaunchedEffect(viewModel.screenState) {
+        if (viewModel.screenState.value.exchanges.isEmpty() && viewModel.screenState.value.errorMessage == null) {
+            viewModel.execute(ExchangesCommand.FetchExchanges)
+        }
     }
 
     Scaffold(
@@ -85,22 +88,18 @@ private fun ExchangesScreenContent(
     ) {
         when {
             state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
+            state.isLoading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
             state.exchanges.isEmpty() -> ShowEmptyList()
             else -> {
-                val exchanges = state.exchanges
-
-                ExchangeList(exchanges, navController)
+                ExchangeList(state.exchanges, navController)
             }
         }
     }
 }
-
-
-
-
-
-
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

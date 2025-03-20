@@ -21,6 +21,7 @@ class ExchangesViewModel(
     private val repository: IExchangeRepository
 ) : BaseViewModel() {
 
+    private val _isLoading = MutableStateFlow(true)
     private val _isRefreshing = MutableStateFlow(false)
     private val _state = MutableStateFlow<ExchangesResponse>(Response.Loading)
 
@@ -29,6 +30,7 @@ class ExchangesViewModel(
             ExchangesScreenState(
                 exchanges = (state as? Response.Success)?.data ?: emptyList(),
                 isRefreshing = isRefreshing,
+                isLoading = state is Response.Loading,
                 errorMessage = (state as? Response.Error)?.errorMessage
             )
         }
@@ -45,6 +47,7 @@ class ExchangesViewModel(
 
     private fun fetchExchanges() {
         launch {
+            _isLoading.value = true
             _state.value = Response.Loading
             try {
                 val exchanges = repository.getExchangeRates()
@@ -52,6 +55,9 @@ class ExchangesViewModel(
             } catch (e: Exception) {
                 Timber.e(e)
                 _state.value = Response.Error(ERROR_MESSAGE)
+            } finally {
+                _isLoading.value = false
+                _isRefreshing.update { false }
             }
         }
     }
@@ -59,12 +65,12 @@ class ExchangesViewModel(
     private fun refreshExchanges() {
         _isRefreshing.update { true }
         fetchExchanges()
-        _isRefreshing.update { false }
     }
 }
 
 data class ExchangesScreenState(
     val exchanges: List<Exchange> = emptyList(),
     val isRefreshing: Boolean = false,
+    val isLoading: Boolean = false,
     val errorMessage: String? = null
 )

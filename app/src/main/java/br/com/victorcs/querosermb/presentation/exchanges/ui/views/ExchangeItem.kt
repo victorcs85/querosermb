@@ -45,7 +45,7 @@ fun ExchangeItem(exchange: Exchange, onClick: () -> Unit) {
             Text(
                 text = stringResource(R.string.volume_one_day_usd, exchange.volume1DayUsd),
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.Green,
+                color = Color.DarkGray,
             )
         }
     }
