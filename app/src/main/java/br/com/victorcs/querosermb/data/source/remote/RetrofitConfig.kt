@@ -17,6 +17,7 @@ object RetrofitConfig {
 
     fun <T> create(service: Class<T>, baseUrl: String, wifiService: WifiService): T {
         val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(Auth2HeaderInterceptor())
             .addInterceptor(ConnectivityInterceptor(wifiService))
             .build()
         return Retrofit.Builder()

@@ -1,6 +1,6 @@
 package br.com.victorcs.querosermb.data.source.remote.repository
 
-import br.com.victorcs.querosermb.data.repository.IExchangeRepository
+import br.com.victorcs.querosermb.domain.repository.IExchangeRepository
 import br.com.victorcs.querosermb.data.source.remote.CoinAPI
 import br.com.victorcs.querosermb.data.source.remote.entity.ExchangeResponse
 import br.com.victorcs.querosermb.domain.mapper.DomainMapper
