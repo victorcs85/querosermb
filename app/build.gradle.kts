@@ -115,6 +115,10 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
     implementation("com.squareup.moshi:moshi-adapters:1.11.0")
 
+    implementation("androidx.compose.material3:material3:1.3.0")
+
+    debugImplementation("androidx.compose.ui:ui-tooling")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

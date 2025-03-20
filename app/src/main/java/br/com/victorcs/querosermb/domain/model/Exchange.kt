@@ -15,6 +15,6 @@ data class Exchange(
     val volume1DayUsd: Int,
     val volume1MthUsd: Double,
     val rank: Double,
-    val integrationStatus: Double,
+    val integrationStatus: String,
     val metricId: List<String>
 )

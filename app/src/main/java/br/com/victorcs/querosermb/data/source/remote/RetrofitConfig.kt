@@ -25,7 +25,7 @@ object RetrofitConfig {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(MoshiBuilder.create()))
             .build()
-            .create(service)
+            .create(service) as T
     }
 }
 

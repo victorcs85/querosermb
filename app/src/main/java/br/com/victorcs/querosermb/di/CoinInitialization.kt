@@ -67,7 +67,7 @@ class CoinInitialization : ModuleInitialization() {
 
     //region Mappers
     private val mappersModule = module {
-        single<DomainMapper<ExchangeResponse, Exchange>>() { ExchangeMapper() }
+        single<DomainMapper<ExchangeResponse, Exchange>> { ExchangeMapper() }
     }
     //endregion
 

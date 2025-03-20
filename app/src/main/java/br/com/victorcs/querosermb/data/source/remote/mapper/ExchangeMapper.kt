@@ -24,7 +24,7 @@ class ExchangeMapper : DomainMapper<ExchangeResponse, Exchange> {
                 volume1DayUsd = volume1DayUsd?.toInt() ?: 0,
                 volume1MthUsd = volume1MthUsd ?: 0.0,
                 rank = rank?.toDouble() ?: 0.0,
-                integrationStatus = integrationStatus?.toDouble() ?: 0.0,
+                integrationStatus = integrationStatus.orEmpty(),
                 metricId = metricId.orEmpty()
             )
         }

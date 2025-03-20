@@ -2,4 +2,5 @@
     <string name="app_name">querosermb</string>
     <string name="exchange_id">ID: %1$s</string>
     <string name="volume_one_day_usd">Volume 1 dia: %1$d</string>
+    <string name="no_data_available">Não foram localizados dados para amostragem.</string>
 </resources>
