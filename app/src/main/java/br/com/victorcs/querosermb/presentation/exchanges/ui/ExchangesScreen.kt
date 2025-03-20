@@ -40,7 +40,9 @@ fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel 
         when (state.value) {
             is Response.Idle -> {}
             is Response.Loading -> CircularProgressIndicator()
-            is Response.Error -> Text("Erro ao carregar os produtos!")
+            is Response.Error -> Text(
+                (state.value as Response.Error).errorMessage
+            )
             is Response.Success -> {
                 val exchanges = (state.value as Response.Success).data
                 LazyColumn(

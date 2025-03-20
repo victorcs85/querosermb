@@ -5,6 +5,7 @@ import br.com.victorcs.querosermb.di.CoinInitialization
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.dsl.koinApplication
 import timber.log.Timber
 
 class CoinApplication : Application() {
