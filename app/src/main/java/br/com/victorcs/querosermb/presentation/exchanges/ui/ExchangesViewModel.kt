@@ -69,7 +69,7 @@ class ExchangesViewModel(
 }
 
 data class ExchangesScreenState(
-    val exchanges: List<Exchange> = emptyList(),
+    val exchanges: List<Exchange>? = null,
     val isRefreshing: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessage: String? = null

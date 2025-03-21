@@ -56,16 +56,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.0"
     }
-
-    packaging {
-        resources {
-            excludes += "**/*"
-        }
-    }
-
-    configurations.all {
-        resolutionStrategy.force("org.hamcrest:hamcrest:2.2")
-    }
 }
 
 dependencies {

@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import br.com.victorcs.querosermb.R
+import br.com.victorcs.querosermb.core.extensions.orFalse
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ShowEmptyList
@@ -34,7 +35,7 @@ fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel 
     val state = viewModel.screenState.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
-        if (viewModel.screenState.value.exchanges.isEmpty() && viewModel.screenState.value.errorMessage == null) {
+        if (viewModel.screenState.value.exchanges == null && viewModel.screenState.value.errorMessage == null) {
             viewModel.execute(ExchangesCommand.FetchExchanges)
         }
     }
@@ -72,7 +73,8 @@ private fun ExchangesScreenContent(
         when {
             state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
             state.isLoading -> ShowLoading()
-            state.exchanges.isEmpty() -> ShowEmptyList()
+            state.exchanges?.isEmpty().orFalse() -> ShowEmptyList()
+            state.exchanges == null -> {}
 
             else -> ExchangeList(state.exchanges, navController, listState)
         }
@@ -108,4 +110,3 @@ internal fun PullToRefreshWrapper(
         )
     }
 }
-
