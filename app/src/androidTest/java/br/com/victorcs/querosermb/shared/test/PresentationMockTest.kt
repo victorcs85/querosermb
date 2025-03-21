@@ -52,4 +52,6 @@ object PresentationMockTest {
     val mockSuccessExchangeDetailsResponse: Response<List<Exchange>> = Response.Success(mockExchangeDetails)
 
     const val DEFAULT_ERROR_MOCK = "Ocorreu um erro ao buscar os dados!"
+
+    const val BINANCE = "Binance"
 }

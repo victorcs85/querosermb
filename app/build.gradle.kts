@@ -56,6 +56,16 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.0"
     }
+
+    packaging {
+        resources {
+            excludes += "**/*"
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.force("org.hamcrest:hamcrest:2.2")
+    }
 }
 
 dependencies {
@@ -117,6 +127,8 @@ dependencies {
 
     implementation("androidx.compose.material3:material3:1.3.0")
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
+
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation(libs.junit)
@@ -138,20 +150,24 @@ dependencies {
     androidTestImplementation("androidx.test:core:1.6.0")
     androidTestImplementation("org.mockito:mockito-android:2.24.5")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
-    androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.6.0")
     androidTestImplementation("io.insert-koin:koin-test:3.5.6")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0") {
         exclude(module = "protobuf-lite")
     }
     androidTestImplementation("androidx.fragment:fragment-testing:1.8.1")
-    androidTestImplementation("io.mockk:mockk-android:1.12.0") { exclude(module = "org.objenesis") }
+    androidTestImplementation("io.mockk:mockk-android:1.13.13") { exclude(module = "org.objenesis") }
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1") {
         exclude(module = "kotlinx-coroutines-debug")
     }
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
 
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.3")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0")
+    androidTestImplementation("org.hamcrest:hamcrest-library:2.2")
+    androidTestImplementation("org.hamcrest:hamcrest:2.2") {
+        exclude(group = "junit")
+    }
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0")
 }

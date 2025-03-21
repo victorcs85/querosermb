@@ -1,3 +1,13 @@
+# Mercado Bitcoin - Desafio Android
+
+Dentro do prazo solicitado de 2 dias. Foram desenvolvidas:
+
+ - Tela de listagem.
+ - Tela de detalhes do ativo selecionado.
+ - Requisitos técnicos foram usados o Jetpack Compose, Retrofit, Moshi, Koin e Kotlin Flow.
+ - Testes unitários para as repositories e ViewModels.
+ - Arquitetura MVVM com Clean Architecture.
+
 # Quero ser MB
 
 Somos a maior plataforma de negociação de criptomoedas e ativos alternativos da América Latina, criada para elevar a experiência de quem vivencia essa revolução, entregando o melhor serviço de negociação de ativos alternativos, com liberdade, segurança e liquidez. Sendo assim, nós existimos para mudar a maneira como as pessoas lidam com o dinheiro através da tecnologia.
