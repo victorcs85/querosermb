@@ -5,7 +5,6 @@ import androidx.test.filters.SmallTest
 import br.com.victorcs.querosermb.base.CoroutinesTestRule
 import br.com.victorcs.querosermb.di.CoinInitialization
 import br.com.victorcs.querosermb.domain.model.Response
-import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
 import br.com.victorcs.querosermb.shared.test.DataMockTest
 import io.mockk.coEvery
@@ -21,8 +20,6 @@ import org.koin.core.context.stopKoin
 import org.koin.core.logger.Level
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import org.mockito.kotlin.any
-import java.util.UUID
 
 @ExperimentalCoroutinesApi
 @SmallTest
@@ -51,7 +48,7 @@ class ExchangesRepositoryImplTest : KoinTest {
 
     @Test
     fun givenSuccess_whenGetExchanges_thenReturnSuccessfully() = runTest {
-        val exchangesResponseMock = DataMockTest.mockResponse
+        val exchangesResponseMock = DataMockTest.mockSuccessExchangeResponse
         val expected = DataMockTest.mockExchangeList
 
         coEvery { repository.getExchanges() } returns exchangesResponseMock

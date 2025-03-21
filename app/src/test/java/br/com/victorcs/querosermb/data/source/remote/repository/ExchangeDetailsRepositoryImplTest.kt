@@ -21,7 +21,6 @@ import org.koin.core.logger.Level
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.mockito.kotlin.any
-import java.util.UUID
 
 @ExperimentalCoroutinesApi
 @SmallTest
@@ -50,7 +49,7 @@ class ExchangeDetailsRepositoryImplTest : KoinTest {
 
     @Test
     fun givenExchangeId_whenGetExchangeDetails_thenReturnSuccessfully() = runTest {
-        val exchangeResponseMock = DataMockTest.mockResponse
+        val exchangeResponseMock = DataMockTest.mockSuccessExchangeResponse
         val expected = DataMockTest.mockExchangeList.first()
 
         coEvery { repository.getExchangeDetails(any()) } returns exchangeResponseMock

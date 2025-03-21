@@ -1,6 +1,5 @@
 package br.com.victorcs.querosermb.shared.test
 
-import br.com.victorcs.querosermb.data.source.remote.entity.ExchangeResponse
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.domain.model.Response
 
@@ -44,7 +43,13 @@ object DataMockTest {
         )
     )
 
-    val mockResponse: Response<List<Exchange>> = Response.Success(mockExchangeList)
+    val mockSuccessExchangeResponse: Response<List<Exchange>> = Response.Success(mockExchangeList)
 
-    val mockError = Exception("Error")
+    val mockExchangeDetails = listOf(
+        mockExchangeList.first()
+    )
+
+    val mockSuccessExchangeDetailsResponse: Response<List<Exchange>> = Response.Success(mockExchangeDetails)
+
+    const val DEFAULT_ERROR_MOCK = "Ocorreu um erro ao buscar os dados!"
 }
