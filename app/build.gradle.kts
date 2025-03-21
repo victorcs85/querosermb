@@ -120,10 +120,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0")
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     testImplementation("io.insert-koin:koin-test-junit4")
     testImplementation("io.insert-koin:koin-android-test")
@@ -137,6 +136,8 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("app.cash.turbine:turbine:1.1.0")
 
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation("androidx.test:core:1.6.0")
     androidTestImplementation("org.mockito:mockito-android:2.24.5")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
@@ -159,5 +160,4 @@ dependencies {
     androidTestImplementation("org.hamcrest:hamcrest:2.2") {
         exclude(group = "junit")
     }
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0")
 }

@@ -25,7 +25,7 @@ import org.koin.test.KoinTestRule
 @SmallTest
 class ExchangesRepositoryImplTest : KoinTest {
 
-    private val repository = mockk<IExchangesRepository>()
+    private val repository = mockk<IExchangesRepository>(relaxed = true)
 
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()

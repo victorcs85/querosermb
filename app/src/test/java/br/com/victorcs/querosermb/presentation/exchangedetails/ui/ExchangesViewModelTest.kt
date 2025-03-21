@@ -4,15 +4,18 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
 import br.com.victorcs.querosermb.base.CoroutinesTestRule
+import br.com.victorcs.querosermb.core.extensions.orFalse
 import br.com.victorcs.querosermb.di.CoinInitialization
 import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
 import br.com.victorcs.querosermb.presentation.exchanges.ui.ExchangesViewModel
 import br.com.victorcs.querosermb.shared.test.DataMockTest
+import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -43,10 +46,10 @@ class ExchangesViewModelTest : KoinTest {
     @get:Rule
     val koinRule = KoinTestRule.create {
         printLogger(Level.ERROR)
+        allowOverride(true)
         loadKoinModules(
             modules = CoinInitialization().init() +
                     module {
-                        allowOverride(true)
                         single { repository }
                         single {
                             ExchangesViewModel(
@@ -57,7 +60,7 @@ class ExchangesViewModelTest : KoinTest {
         )
     }
 
-    private val repository: IExchangesRepository = mockk()
+    private val repository: IExchangesRepository = mockk(relaxed = true)
 
     private lateinit var viewModel: ExchangesViewModel
 
@@ -68,6 +71,7 @@ class ExchangesViewModelTest : KoinTest {
 
     @After
     fun tearDown() {
+        clearMocks(repository)
         stopKoin()
     }
 
@@ -84,8 +88,8 @@ class ExchangesViewModelTest : KoinTest {
         viewModel.screenState.test {
             val successResponse = awaitItem()
             assertTrue(
-                successResponse.exchanges.isEmpty().not() &&
-                        successResponse.exchanges.first() == DataMockTest.mockExchangeDetails.first()
+                successResponse.exchanges != null && successResponse.exchanges?.isEmpty()?.not().orFalse() &&
+                        successResponse.exchanges?.first() == DataMockTest.mockExchangeDetails.first()
             )
             cancelAndIgnoreRemainingEvents()
         }
@@ -107,7 +111,7 @@ class ExchangesViewModelTest : KoinTest {
         viewModel.screenState.test {
             val failResponse = awaitItem()
             assertTrue(
-                failResponse.exchanges.isEmpty() &&
+                failResponse.exchanges?.isEmpty().orFalse() &&
                         failResponse.errorMessage == DataMockTest.DEFAULT_ERROR_MOCK
             )
             cancelAndIgnoreRemainingEvents()

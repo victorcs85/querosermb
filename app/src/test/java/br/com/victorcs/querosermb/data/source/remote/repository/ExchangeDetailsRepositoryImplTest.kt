@@ -26,7 +26,7 @@ import org.mockito.kotlin.any
 @SmallTest
 class ExchangeDetailsRepositoryImplTest : KoinTest {
 
-    private val repository = mockk<IExchangeDetailsRepository>()
+    private val repository = mockk<IExchangeDetailsRepository>(relaxed = true)
 
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
@@ -52,9 +52,9 @@ class ExchangeDetailsRepositoryImplTest : KoinTest {
         val exchangeResponseMock = DataMockTest.mockSuccessExchangeResponse
         val expected = DataMockTest.mockExchangeList.first()
 
-        coEvery { repository.getExchangeDetails(any()) } returns exchangeResponseMock
+        coEvery { repository.getExchangeDetails(any<String>()) } returns exchangeResponseMock
 
-        val result = repository.getExchangeDetails(any())
+        val result = repository.getExchangeDetails(any<String>())
 
         assert(result is Response.Success && result.data.first() == expected)
     }

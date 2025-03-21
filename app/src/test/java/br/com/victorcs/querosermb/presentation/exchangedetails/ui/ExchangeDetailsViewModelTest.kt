@@ -8,10 +8,12 @@ import br.com.victorcs.querosermb.di.CoinInitialization
 import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
 import br.com.victorcs.querosermb.shared.test.DataMockTest
+import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -43,10 +45,10 @@ class ExchangeDetailsViewModelTest : KoinTest {
     @get:Rule
     val koinRule = KoinTestRule.create {
         printLogger(Level.ERROR)
+        allowOverride(true)
         loadKoinModules(
             modules = CoinInitialization().init() +
                     module {
-                        allowOverride(true)
                         single { repository }
                         single {
                             ExchangeDetailsViewModel(
@@ -57,7 +59,7 @@ class ExchangeDetailsViewModelTest : KoinTest {
         )
     }
 
-    private val repository: IExchangeDetailsRepository = mockk()
+    private val repository: IExchangeDetailsRepository = mockk(relaxed = true)
 
     private lateinit var viewModel: ExchangeDetailsViewModel
 
@@ -68,6 +70,7 @@ class ExchangeDetailsViewModelTest : KoinTest {
 
     @After
     fun tearDown() {
+        clearMocks(repository)
         stopKoin()
     }
 
@@ -75,7 +78,7 @@ class ExchangeDetailsViewModelTest : KoinTest {
     fun givenExchangeId_whenGetDetails_thenReturnSuccessfully() = runTest {
         val mockResponse = DataMockTest.mockSuccessExchangeDetailsResponse
 
-        coEvery { repository.getExchangeDetails(any()) } returns mockResponse
+        coEvery { repository.getExchangeDetails(any<String>()) } returns mockResponse
 
         viewModel.execute(
             ExchangeDetailsCommand.GetExchangeDetails(UUID.randomUUID().toString())
@@ -90,12 +93,12 @@ class ExchangeDetailsViewModelTest : KoinTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify { repository.getExchangeDetails(any()) }
+        coVerify { repository.getExchangeDetails(any<String>()) }
     }
 
     @Test
     fun givenWrongExchangeId_whenGetDetails_thenReturnFail() = runTest {
-        coEvery { repository.getExchangeDetails(any()) } throws IllegalArgumentException(
+        coEvery { repository.getExchangeDetails(any<String>()) } throws IllegalArgumentException(
             DataMockTest.DEFAULT_ERROR_MOCK
         )
 
@@ -112,6 +115,6 @@ class ExchangeDetailsViewModelTest : KoinTest {
             cancelAndIgnoreRemainingEvents()
         }
 
-        coVerify { repository.getExchangeDetails(any()) }
+        coVerify { repository.getExchangeDetails(any<String>()) }
     }
 }
