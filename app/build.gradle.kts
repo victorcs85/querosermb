@@ -124,17 +124,17 @@ dependencies {
 
     testImplementation(libs.junit)
 
-    testImplementation("io.insert-koin:koin-test-junit4")
-    testImplementation("io.insert-koin:koin-android-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.0")
-    testImplementation("io.mockk:mockk:1.13.13") { exclude(module = "org.objenesis") }
-    testImplementation("org.mockito:mockito-core:5.5.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
-    testImplementation("androidx.test:rules:1.4.0")
-    testImplementation("androidx.test:runner:1.4.0")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("app.cash.turbine:turbine:1.1.0")
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.koin.android.test)
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.mockk) { exclude(module = "org.objenesis") }
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.rules)
+    testImplementation(libs.androidx.runner)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.turbine)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
