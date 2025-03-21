@@ -1,3 +1,4 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter
 import java.util.Properties
 
 plugins {
@@ -122,4 +123,32 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    testImplementation("io.insert-koin:koin-test-junit4")
+    testImplementation("io.insert-koin:koin-android-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.0")
+    testImplementation("io.mockk:mockk:1.13.13") { exclude(module = "org.objenesis") }
+    testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    testImplementation("androidx.test:rules:1.4.0")
+    testImplementation("androidx.test:runner:1.4.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("app.cash.turbine:turbine:1.1.0")
+
+    androidTestImplementation("androidx.test:core:1.6.0")
+    androidTestImplementation("org.mockito:mockito-android:2.24.5")
+    androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
+    androidTestImplementation("io.insert-koin:koin-test:3.5.6")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0") {
+        exclude(module = "protobuf-lite")
+    }
+    androidTestImplementation("androidx.fragment:fragment-testing:1.8.1")
+    androidTestImplementation("io.mockk:mockk-android:1.12.0") { exclude(module = "org.objenesis") }
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1") {
+        exclude(module = "kotlinx-coroutines-debug")
+    }
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
 }
