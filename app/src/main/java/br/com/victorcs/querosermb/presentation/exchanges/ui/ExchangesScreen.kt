@@ -1,6 +1,5 @@
 package br.com.victorcs.querosermb.presentation.exchanges.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,8 +25,6 @@ import br.com.victorcs.querosermb.core.extensions.orFalse
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ShowEmptyList
-import br.com.victorcs.querosermb.presentation.theme.CoinTheme
-import br.com.victorcs.querosermb.presentation.theme.SonicSilver
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
 import br.com.victorcs.querosermb.presentation.views.ShowLoading
 import org.koin.androidx.compose.koinViewModel
