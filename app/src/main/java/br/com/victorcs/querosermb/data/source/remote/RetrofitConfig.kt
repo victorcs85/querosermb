@@ -29,7 +29,6 @@ object RetrofitConfig {
     }
 }
 
-//@KoinApiExtension
 class Auth2HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()

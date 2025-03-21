@@ -2,6 +2,7 @@ package br.com.victorcs.querosermb.presentation.exchanges.ui
 
 import androidx.lifecycle.viewModelScope
 import br.com.victorcs.querosermb.core.base.BaseViewModel
+import br.com.victorcs.querosermb.core.constants.NETWORK_ERROR
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.domain.model.Response
 import br.com.victorcs.querosermb.domain.repository.ExchangesResponse
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
+import java.io.IOException
 
 private const val ERROR_MESSAGE = "Ocorreu um erro ao buscar os dados!"
 
@@ -31,7 +33,9 @@ class ExchangesViewModel(
                 exchanges = (state as? Response.Success)?.data ?: emptyList(),
                 isRefreshing = isRefreshing,
                 isLoading = state is Response.Loading,
-                errorMessage = (state as? Response.Error)?.errorMessage
+                errorMessage = if(state is Response.Error && state.errorMessage.contains(
+                        NETWORK_ERROR)) {
+                    NETWORK_ERROR } else (state as? Response.Error)?.errorMessage
             )
         }
         .stateIn(
