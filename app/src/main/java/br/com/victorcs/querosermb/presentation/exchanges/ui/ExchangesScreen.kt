@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,7 +33,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel = koinViewModel()) {
     val state = viewModel.screenState.collectAsStateWithLifecycle().value
 
-    LaunchedEffect(viewModel.screenState) {
+    LaunchedEffect(Unit) {
         if (viewModel.screenState.value.exchanges.isEmpty() && viewModel.screenState.value.errorMessage == null) {
             viewModel.execute(ExchangesCommand.FetchExchanges)
         }
@@ -61,6 +62,8 @@ private fun ExchangesScreenContent(
     navController: NavController,
     onRefresh: () -> Unit
 ) {
+    val listState = rememberLazyListState()
+
     PullToRefreshWrapper(
         isRefreshing = state.isRefreshing,
         onRefresh = onRefresh,
@@ -71,7 +74,7 @@ private fun ExchangesScreenContent(
             state.isLoading -> ShowLoading()
             state.exchanges.isEmpty() -> ShowEmptyList()
 
-            else -> ExchangeList(state.exchanges, navController)
+            else -> ExchangeList(state.exchanges, navController, listState)
         }
     }
 }

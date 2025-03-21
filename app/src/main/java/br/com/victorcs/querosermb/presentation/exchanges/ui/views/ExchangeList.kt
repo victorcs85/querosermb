@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -19,9 +20,9 @@ import com.squareup.moshi.Types
 @Composable
 fun ExchangeList(
     exchanges: List<Exchange>,
-    navController: NavController
+    navController: NavController,
+    listState: LazyListState
 ) {
-    val listState = rememberLazyListState()
     LazyColumn(
         state = listState,
         contentPadding = PaddingValues(16.dp),
@@ -46,9 +47,12 @@ fun ExchangeList(
 fun ExchangesPreview() {
     val context = LocalContext.current
     val fakeNavController = remember { NavController(context) }
+    val listState = rememberLazyListState()
+
     ExchangeList(
         getMockExchangeList(),
-        fakeNavController
+        fakeNavController,
+        listState
     )
 }
 

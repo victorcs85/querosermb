@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import timber.log.Timber
 
 class ExchangesViewModel(
@@ -49,9 +48,8 @@ class ExchangesViewModel(
 
     private fun fetchExchanges() {
         launch {
-            _isLoading.value = true
-            _state.value = Response.Loading
             try {
+                _isLoading.value = true
                 val exchanges = repository.getExchanges()
                 _state.value = exchanges
             } catch (e: Exception) {
@@ -59,13 +57,13 @@ class ExchangesViewModel(
                 _state.value = Response.Error(ERROR_MESSAGE)
             } finally {
                 _isLoading.value = false
-                _isRefreshing.update { false }
+                _isRefreshing.value = false
             }
         }
     }
 
     private fun refreshExchanges() {
-        _isRefreshing.update { true }
+        _isRefreshing.value = true
         fetchExchanges()
     }
 }
