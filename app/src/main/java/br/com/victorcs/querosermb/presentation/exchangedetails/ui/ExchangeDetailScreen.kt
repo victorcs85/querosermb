@@ -98,6 +98,7 @@ private fun DetailsContent(
                             exchange?.dataQuoteStart.orEmpty()
                         )
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(stringResource(R.string.data_quote_end, exchange?.dataQuoteEnd.orEmpty()))
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
@@ -106,10 +107,13 @@ private fun DetailsContent(
                             exchange?.volume1HrsUsd.orEmpty()
                         )
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(stringResource(R.string.volume_one_day, exchange?.volume1DayUsd ?: 0))
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(stringResource(R.string.volume_one_month, exchange?.volume1MthUsd ?: 0.0))
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(stringResource(R.string.rank, exchange?.rank ?: 0))
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         stringResource(
                             R.string.integration_status,

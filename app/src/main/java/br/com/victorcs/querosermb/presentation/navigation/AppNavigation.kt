@@ -1,6 +1,7 @@
 package br.com.victorcs.querosermb.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,7 +28,9 @@ fun AppNavigation() {
         ) { backStackEntry ->
             val exchangeId = backStackEntry.arguments?.getString("exchangeId")
             if (exchangeId != null) {
-                exchangeDetailsViewModel.execute(ExchangeDetailsCommand.GetExchangeDetails(exchangeId))
+                LaunchedEffect(exchangeId) {
+                    exchangeDetailsViewModel.execute(ExchangeDetailsCommand.GetExchangeDetails(exchangeId))
+                }
                 ExchangeDetailScreen(navController, exchangeDetailsViewModel)
             }
         }
