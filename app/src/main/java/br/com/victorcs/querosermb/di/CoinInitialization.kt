@@ -7,10 +7,13 @@ import br.com.victorcs.querosermb.data.source.remote.CoinAPI
 import br.com.victorcs.querosermb.data.source.remote.RetrofitConfig
 import br.com.victorcs.querosermb.data.source.remote.entity.ExchangeResponse
 import br.com.victorcs.querosermb.data.source.remote.mapper.ExchangeMapper
-import br.com.victorcs.querosermb.data.source.remote.repository.ExchangeRepositoryImpl
+import br.com.victorcs.querosermb.data.source.remote.repository.ExchangeDetailsRepositoryImpl
+import br.com.victorcs.querosermb.data.source.remote.repository.ExchangesRepositoryImpl
 import br.com.victorcs.querosermb.domain.mapper.DomainMapper
 import br.com.victorcs.querosermb.domain.model.Exchange
-import br.com.victorcs.querosermb.domain.repository.IExchangeRepository
+import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
+import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
+import br.com.victorcs.querosermb.presentation.exchangedetails.ui.ExchangeDetailsViewModel
 import br.com.victorcs.querosermb.presentation.exchanges.ui.ExchangesViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -56,8 +59,14 @@ class CoinInitialization : ModuleInitialization() {
 
     //region Repositories
     private val repositoriesModule = module {
-        single<IExchangeRepository>() {
-            ExchangeRepositoryImpl(
+        single<IExchangesRepository>() {
+            ExchangesRepositoryImpl(
+                service = get(),
+                mapper = get()
+            )
+        }
+        single<IExchangeDetailsRepository>() {
+            ExchangeDetailsRepositoryImpl(
                 service = get(),
                 mapper = get()
             )
@@ -75,6 +84,11 @@ class CoinInitialization : ModuleInitialization() {
     private val viewModelsModule = module {
         viewModel {
             ExchangesViewModel(
+                repository = get()
+            )
+        }
+        viewModel {
+            ExchangeDetailsViewModel(
                 repository = get()
             )
         }

@@ -1,4 +1,4 @@
-package br.com.victorcs.querosermb.presentation.exchanges.ui.views
+package br.com.victorcs.querosermb.presentation.views
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

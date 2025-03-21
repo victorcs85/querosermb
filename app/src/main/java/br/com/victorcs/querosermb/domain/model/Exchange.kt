@@ -1,5 +1,9 @@
 package br.com.victorcs.querosermb.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Exchange(
     val exchangeId: String,
     val website: String,
@@ -14,7 +18,7 @@ data class Exchange(
     val volume1HrsUsd: String,
     val volume1DayUsd: Int,
     val volume1MthUsd: Double,
-    val rank: Double,
+    val rank: Int,
     val integrationStatus: String,
     val metricId: List<String>
-)
+) : Parcelable
