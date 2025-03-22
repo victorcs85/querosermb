@@ -9,6 +9,7 @@ import br.com.victorcs.querosermb.domain.model.Response
 import br.com.victorcs.querosermb.domain.repository.ExchangesResponse
 import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
+import br.com.victorcs.querosermb.presentation.utils.IDispatchersProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +18,9 @@ import kotlinx.coroutines.flow.stateIn
 import timber.log.Timber
 
 class ExchangesViewModel(
-    private val repository: IExchangesRepository
-) : BaseViewModel() {
+    private val repository: IExchangesRepository,
+    dispatchers: IDispatchersProvider
+) : BaseViewModel(dispatchers) {
 
     private val _isRefreshing = MutableStateFlow(false)
     private val _state = MutableStateFlow<ExchangesResponse>(Response.Idle)

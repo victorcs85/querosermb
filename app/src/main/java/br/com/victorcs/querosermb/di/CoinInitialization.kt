@@ -15,6 +15,8 @@ import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
 import br.com.victorcs.querosermb.presentation.exchangedetails.ui.ExchangeDetailsViewModel
 import br.com.victorcs.querosermb.presentation.exchanges.ui.ExchangesViewModel
+import br.com.victorcs.querosermb.presentation.utils.IDispatchersProvider
+import br.com.victorcs.querosermb.presentation.utils.IDispatchersProviderImpl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
@@ -84,14 +86,22 @@ class CoinInitialization : ModuleInitialization() {
     private val viewModelsModule = module {
         viewModel {
             ExchangesViewModel(
-                repository = get()
+                repository = get(),
+                dispatchers = get()
             )
         }
         viewModel {
             ExchangeDetailsViewModel(
-                repository = get()
+                repository = get(),
+                dispatchers = get()
             )
         }
+    }
+    //endregion
+
+    //region Provider
+    private val providerModule = module {
+        single<IDispatchersProvider> { IDispatchersProviderImpl() }
     }
     //endregion
 
@@ -102,6 +112,7 @@ class CoinInitialization : ModuleInitialization() {
         networkModule,
         serviceModule,
         interceptorModule,
-        viewModelsModule
+        viewModelsModule,
+        providerModule
     )
 }

@@ -6,13 +6,15 @@ import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.domain.model.Response
 import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
+import br.com.victorcs.querosermb.presentation.utils.IDispatchersProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import timber.log.Timber
 
 class ExchangeDetailsViewModel(
-    private val repository: IExchangeDetailsRepository
-) : BaseViewModel() {
+    private val repository: IExchangeDetailsRepository,
+    dispatchers: IDispatchersProvider
+) : BaseViewModel(dispatchers) {
 
     private val _state = MutableStateFlow(ExchangeDetailsScreenState())
     val state: StateFlow<ExchangeDetailsScreenState> = _state

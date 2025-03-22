@@ -10,6 +10,7 @@ import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.presentation.MainActivity
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
 import br.com.victorcs.querosermb.shared.test.PresentationMockTest
+import br.com.victorcs.querosermb.utils.TestDispatchersProvider
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -31,7 +32,7 @@ class ExchangeDetailsScreenTest : KoinTest {
 
     @Before
     fun setUp() {
-        viewModel = ExchangeDetailsViewModel(repository)
+        viewModel = ExchangeDetailsViewModel(repository, TestDispatchersProvider)
         coEvery { repository.getExchangeDetails(any<String>()) } returns
                 PresentationMockTest.mockSuccessExchangeDetailsResponse
 

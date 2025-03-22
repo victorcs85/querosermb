@@ -3,62 +3,37 @@ package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
-import br.com.victorcs.querosermb.base.CoroutinesTestRule
+import br.com.victorcs.querosermb.base.BaseViewModelTest
+import br.com.victorcs.querosermb.base.CoroutineTestRule
 import br.com.victorcs.querosermb.core.extensions.orFalse
-import br.com.victorcs.querosermb.di.CoinInitialization
 import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
 import br.com.victorcs.querosermb.presentation.exchanges.ui.ExchangesViewModel
 import br.com.victorcs.querosermb.shared.test.DataMockTest
-import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.junit.runner.RunWith
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.stopKoin
-import org.koin.core.logger.Level
-import org.koin.dsl.module
-import org.koin.test.KoinTest
-import org.koin.test.KoinTestRule
-import org.mockito.junit.MockitoJUnitRunner
 import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
 @SmallTest
-class ExchangesViewModelTest : KoinTest {
+class ExchangesViewModelTest : BaseViewModelTest() {
 
     @get:Rule
-    val coroutinesTestRule = CoroutinesTestRule()
+    val coroutinesTestRule = CoroutineTestRule()
 
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val koinRule = KoinTestRule.create {
-        printLogger(Level.ERROR)
-        allowOverride(true)
-        loadKoinModules(
-            modules = CoinInitialization().init() +
-                    module {
-                        single { repository }
-                        single {
-                            ExchangesViewModel(
-                                repository
-                            )
-                        }
-                    },
-        )
-    }
 
     private val repository: IExchangesRepository = mockk(relaxed = true)
 
@@ -66,17 +41,17 @@ class ExchangesViewModelTest : KoinTest {
 
     @Before
     fun setUp() {
-        viewModel = ExchangesViewModel(repository)
+        Dispatchers.setMain(testDispatcher)
     }
 
     @After
     fun tearDown() {
-        clearMocks(repository)
-        stopKoin()
+        Dispatchers.resetMain()
     }
 
     @Test
     fun givenSuccess_whenGetExchanges_thenReturnSuccessfully() = runTest {
+        viewModel = ExchangesViewModel(repository, testDispatcherProvider)
         val mockResponse = DataMockTest.mockSuccessExchangeResponse
 
         coEvery { repository.getExchanges() } returns mockResponse
@@ -85,7 +60,7 @@ class ExchangesViewModelTest : KoinTest {
             ExchangesCommand.FetchExchanges
         )
 
-        advanceUntilIdle()
+//        advanceUntilIdle()
 
         viewModel.screenState.test {
             val successResponse = awaitItem()
@@ -101,7 +76,7 @@ class ExchangesViewModelTest : KoinTest {
 
     @Test
     fun givenFailRequest_whenGetExchanges_thenReturnFail() = runTest {
-
+        viewModel = ExchangesViewModel(repository, testDispatcherProvider)
         coEvery { repository.getExchanges() } throws IllegalArgumentException(
             DataMockTest.DEFAULT_ERROR_MOCK
         )
@@ -110,7 +85,7 @@ class ExchangesViewModelTest : KoinTest {
             ExchangesCommand.FetchExchanges
         )
 
-        advanceUntilIdle()
+//        advanceUntilIdle()
 
         viewModel.screenState.test {
             val failResponse = awaitItem()

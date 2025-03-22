@@ -1,24 +1,43 @@
 package br.com.victorcs.querosermb.base
 
+import br.com.victorcs.querosermb.presentation.utils.IDispatchersProvider
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-@ExperimentalCoroutinesApi
-class CoroutinesTestRule(
-    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
-) : TestWatcher() {
+@OptIn(ExperimentalCoroutinesApi::class)
+class CoroutineTestRule : TestWatcher() {
 
-    override fun starting(description: Description) {
+    internal val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+
+    override fun starting(description: Description?) {
+        super.starting(description)
         Dispatchers.setMain(testDispatcher)
     }
 
-    override fun finished(description: Description) {
+    override fun finished(description: Description?) {
+        super.finished(description)
         Dispatchers.resetMain()
     }
+
+    val testDispatcherProvider = object : IDispatchersProvider {
+        override val io: CoroutineDispatcher
+            get() = testDispatcher
+        override val main: CoroutineDispatcher
+            get() = testDispatcher
+        override val default: CoroutineDispatcher
+            get() = testDispatcher
+    }
+}
+
+fun CoroutineTestRule.runBlockingTest(block: suspend TestScope.() -> Unit) {
+    runTest(testBody = block)
 }

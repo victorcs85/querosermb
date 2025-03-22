@@ -148,6 +148,7 @@ dependencies {
     testImplementation(libs.androidx.runner)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.turbine)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     //endregion
 
     //region Instrumented Tests
