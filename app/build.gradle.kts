@@ -137,7 +137,7 @@ dependencies {
     //region Unit Tests
     testImplementation(libs.junit)
 
-    //testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.koin.test.junit4)
     testImplementation(libs.koin.android.test)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.mockk) { exclude(module = "org.objenesis") }
