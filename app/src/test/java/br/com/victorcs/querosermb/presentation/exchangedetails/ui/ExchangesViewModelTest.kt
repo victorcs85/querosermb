@@ -15,6 +15,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -37,10 +38,10 @@ import kotlin.test.assertTrue
 class ExchangesViewModelTest : KoinTest {
 
     @get:Rule
-    val rule: TestRule = InstantTaskExecutorRule()
+    val coroutinesTestRule = CoroutinesTestRule()
 
     @get:Rule
-    val coroutinesTestRule = CoroutinesTestRule()
+    val rule: TestRule = InstantTaskExecutorRule()
 
     @get:Rule
     val koinRule = KoinTestRule.create {
@@ -84,6 +85,8 @@ class ExchangesViewModelTest : KoinTest {
             ExchangesCommand.FetchExchanges
         )
 
+        advanceUntilIdle()
+
         viewModel.screenState.test {
             val successResponse = awaitItem()
             assertTrue(
@@ -106,6 +109,8 @@ class ExchangesViewModelTest : KoinTest {
         viewModel.execute(
             ExchangesCommand.FetchExchanges
         )
+
+        advanceUntilIdle()
 
         viewModel.screenState.test {
             val failResponse = awaitItem()

@@ -17,10 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import br.com.victorcs.querosermb.R
+import br.com.victorcs.querosermb.core.constants.PULL_TO_REFRESH_TAG
 import br.com.victorcs.querosermb.core.extensions.orFalse
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
@@ -99,7 +101,8 @@ internal fun PullToRefreshWrapper(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
             enabled = enabled,
-        ),
+        )
+        .testTag(PULL_TO_REFRESH_TAG),
         contentAlignment = contentAlignment,
     ) {
         content()

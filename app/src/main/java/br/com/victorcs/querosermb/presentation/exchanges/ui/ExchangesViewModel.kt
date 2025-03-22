@@ -20,9 +20,8 @@ class ExchangesViewModel(
     private val repository: IExchangesRepository
 ) : BaseViewModel() {
 
-    private val _isLoading = MutableStateFlow(true)
     private val _isRefreshing = MutableStateFlow(false)
-    private val _state = MutableStateFlow<ExchangesResponse>(Response.Loading)
+    private val _state = MutableStateFlow<ExchangesResponse>(Response.Idle)
 
     val screenState: StateFlow<ExchangesScreenState> = _state
         .combine(_isRefreshing) { state, isRefreshing ->
@@ -49,14 +48,13 @@ class ExchangesViewModel(
     private fun fetchExchanges() {
         launch {
             try {
-                _isLoading.value = true
+                _state.value = Response.Loading
                 val exchanges = repository.getExchanges()
                 _state.value = exchanges
             } catch (e: Exception) {
                 Timber.e(e)
                 _state.value = Response.Error(ERROR_MESSAGE)
             } finally {
-                _isLoading.value = false
                 _isRefreshing.value = false
             }
         }

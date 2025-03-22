@@ -64,6 +64,10 @@ android {
             excludes += "META-INF/LICENSE-notice.md"
         }
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {

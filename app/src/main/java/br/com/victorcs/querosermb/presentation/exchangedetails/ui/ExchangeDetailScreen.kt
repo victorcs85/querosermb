@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.victorcs.querosermb.R
+import br.com.victorcs.querosermb.core.constants.EXCHANGE_ID
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
@@ -38,7 +39,7 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
     val exchange = state.exchange
 
     if (exchange == null && !state.isLoading) {
-        val exchangeId = navController.previousBackStackEntry?.arguments?.getString("exchangeId")
+        val exchangeId = navController.previousBackStackEntry?.arguments?.getString(EXCHANGE_ID)
         exchangeId?.let {
             viewModel.execute(ExchangeDetailsCommand.GetExchangeDetails(it))
         }
@@ -104,11 +105,11 @@ private fun DetailsContent(
                     Text(
                         stringResource(
                             R.string.volume_one_hour,
-                            exchange?.volume1HrsUsd.orEmpty()
+                            exchange?.volume1HrsUsd ?: 0.0
                         )
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(stringResource(R.string.volume_one_day, exchange?.volume1DayUsd ?: 0))
+                    Text(stringResource(R.string.volume_one_day, exchange?.volume1DayUsd ?: 0.0))
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(stringResource(R.string.volume_one_month, exchange?.volume1MthUsd ?: 0.0))
                     Spacer(modifier = Modifier.height(8.dp))
