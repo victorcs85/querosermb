@@ -134,9 +134,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //region Unit Tests
     testImplementation(libs.junit)
 
-    testImplementation(libs.koin.test.junit4)
+    //testImplementation(libs.koin.test.junit4)
     testImplementation(libs.koin.android.test)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.mockk) { exclude(module = "org.objenesis") }
@@ -147,7 +148,9 @@ dependencies {
     testImplementation(libs.androidx.runner)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.turbine)
+    //endregion
 
+    //region Instrumented Tests
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation("androidx.test:core:1.6.0")
@@ -172,4 +175,5 @@ dependencies {
     androidTestImplementation("org.hamcrest:hamcrest:2.2") {
         exclude(group = "junit")
     }
+    //endregion
 }
