@@ -1,5 +1,6 @@
 package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 
+import androidx.compose.runtime.Immutable
 import br.com.victorcs.querosermb.core.base.BaseViewModel
 import br.com.victorcs.querosermb.core.constants.ERROR_MESSAGE
 import br.com.victorcs.querosermb.domain.model.Exchange
@@ -43,6 +44,7 @@ class ExchangeDetailsViewModel(
     }
 }
 
+@Immutable
 data class ExchangeDetailsScreenState(
     val exchange: Exchange? = null,
     val isLoading: Boolean = false,

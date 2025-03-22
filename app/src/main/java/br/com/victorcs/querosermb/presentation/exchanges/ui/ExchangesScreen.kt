@@ -36,10 +36,8 @@ import org.koin.androidx.compose.koinViewModel
 fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel = koinViewModel()) {
     val state = viewModel.screenState.collectAsStateWithLifecycle().value
 
-    LaunchedEffect(Unit) {
-        if (viewModel.screenState.value.exchanges == null && viewModel.screenState.value.errorMessage == null) {
-            viewModel.execute(ExchangesCommand.FetchExchanges)
-        }
+    LaunchedEffect(state.exchanges == null && state.errorMessage == null) {
+        viewModel.execute(ExchangesCommand.FetchExchanges)
     }
 
     Scaffold(
@@ -106,10 +104,12 @@ internal fun PullToRefreshWrapper(
         contentAlignment = contentAlignment,
     ) {
         content()
-        Indicator(
-            modifier = Modifier.align(Alignment.TopCenter),
-            isRefreshing = isRefreshing,
-            state = refreshState,
-        )
+        if(isRefreshing.not()) {
+            Indicator(
+                modifier = Modifier.align(Alignment.TopCenter),
+                isRefreshing = isRefreshing,
+                state = refreshState,
+            )
+        }
     }
 }
