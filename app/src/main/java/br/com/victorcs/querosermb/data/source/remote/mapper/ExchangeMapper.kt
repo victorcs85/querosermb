@@ -4,6 +4,7 @@ import br.com.victorcs.querosermb.core.extensions.toFormatedDate
 import br.com.victorcs.querosermb.data.source.remote.entity.ExchangeResponse
 import br.com.victorcs.querosermb.domain.mapper.DomainMapper
 import br.com.victorcs.querosermb.domain.model.Exchange
+import br.com.victorcs.querosermb.domain.model.Icons
 
 class ExchangeMapper : DomainMapper<ExchangeResponse, Exchange> {
 
@@ -25,6 +26,13 @@ class ExchangeMapper : DomainMapper<ExchangeResponse, Exchange> {
                 volume1MthUsd = volume1MthUsd ?: 0.0,
                 rank = rank ?: 0,
                 integrationStatus = integrationStatus.orEmpty(),
+                icons = icons?.map {
+                    Icons(
+                        exchangeId = it.exchangeId.orEmpty(),
+                        assetId = it.assetId.orEmpty(),
+                        url = it.url.orEmpty()
+                    )
+                },
                 metricId = metricId.orEmpty()
             )
         }

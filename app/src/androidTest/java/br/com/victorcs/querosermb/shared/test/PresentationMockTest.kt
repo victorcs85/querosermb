@@ -22,6 +22,7 @@ object PresentationMockTest {
             volume1MthUsd = 0.0,
             rank = 2,
             integrationStatus = "INTEGRATED",
+            icons = null,
             metricId = emptyList()
         ),
         Exchange(
@@ -40,6 +41,7 @@ object PresentationMockTest {
             volume1MthUsd = 0.0,
             rank = 2,
             integrationStatus = "INTEGRATED",
+            icons = null,
             metricId = emptyList()
         )
     )
@@ -63,6 +65,7 @@ object PresentationMockTest {
             volume1MthUsd = 113823711648.39,
             rank = 2,
             integrationStatus = "INTEGRATED",
+            icons = null,
             metricId = emptyList()
         ),
         Exchange(
@@ -81,6 +84,7 @@ object PresentationMockTest {
             volume1MthUsd = 11613360311.66,
             rank = 2,
             integrationStatus = "INTEGRATED",
+            icons = null,
             metricId = emptyList()
         )
     )

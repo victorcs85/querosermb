@@ -1,38 +1,35 @@
 package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.victorcs.querosermb.R
 import br.com.victorcs.querosermb.core.constants.EXCHANGE_ID
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
+import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
+import br.com.victorcs.querosermb.presentation.views.ExchangeTopAppBar
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
 import br.com.victorcs.querosermb.presentation.views.ShowLoading
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetailsViewModel) {
     val state = viewModel.state.collectAsState().value
@@ -47,20 +44,9 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back_button)
-                        )
-                    }
-                },
-                title = {
-                    Text(
-                        text = exchange?.name ?: stringResource(R.string.exchange_details_title)
-                    )
-                }
+            ExchangeTopAppBar(
+                title = exchange?.name ?: stringResource(R.string.exchange_details_title),
+                onBackPressed = { navController.popBackStack() }
             )
         }
     ) { contentPadding ->
@@ -73,54 +59,54 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
 }
 
 @Composable
-private fun DetailsContent(
-    contentPadding: PaddingValues,
-    exchange: Exchange?
-) {
-    Box(modifier = Modifier.padding(contentPadding)) {
-
-        Column(modifier = Modifier.padding(16.dp)) {
+private fun DetailsContent(contentPadding: PaddingValues, exchange: Exchange) {
+    Box(
+        modifier = Modifier
+            .padding(contentPadding)
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ) {
             Text(
                 text = stringResource(R.string.exchange_details),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                color = LocalCustomColors.current.exchangeDetailsTitle,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.medium,
-                colors = CardDefaults.cardColors(containerColor = Color.Gray.copy(alpha = 0.4f)),
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(brush = Brush.horizontalGradient(
+                        colors = LocalCustomColors.current.cardExchangeDetailsShaderGradient
+                    ))
+                    .padding(16.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(stringResource(R.string.website, exchange?.website.orEmpty()))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        stringResource(
-                            R.string.data_quote_start,
-                            exchange?.dataQuoteStart.orEmpty()
+                Column {
+                    listOf(
+                        R.string.website to exchange.website,
+                        R.string.data_quote_start to exchange.dataQuoteStart,
+                        R.string.data_quote_end to exchange.dataQuoteEnd,
+                        R.string.volume_one_hour to "${exchange.volume1HrsUsd} USD",
+                        R.string.volume_one_day to "${exchange.volume1DayUsd} USD",
+                        R.string.volume_one_month to "${exchange.volume1MthUsd} USD",
+                        R.string.rank to exchange.rank.toString(),
+                        R.string.integration_status to exchange.integrationStatus
+                    ).forEach { (resId, value) ->
+                        Text(
+                            text = stringResource(resId),
+                            fontWeight = FontWeight.Bold,
+                            color = LocalCustomColors.current.exchangeInfo
                         )
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(stringResource(R.string.data_quote_end, exchange?.dataQuoteEnd.orEmpty()))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        stringResource(
-                            R.string.volume_one_hour,
-                            exchange?.volume1HrsUsd ?: 0.0
+                        Text(
+                            text = value,
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            color = LocalCustomColors.current.exchangeInfo
                         )
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(stringResource(R.string.volume_one_day, exchange?.volume1DayUsd ?: 0.0))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(stringResource(R.string.volume_one_month, exchange?.volume1MthUsd ?: 0.0))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(stringResource(R.string.rank, exchange?.rank ?: 0))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        stringResource(
-                            R.string.integration_status,
-                            exchange?.integrationStatus ?: 0
-                        )
-                    )
+                    }
                 }
             }
         }

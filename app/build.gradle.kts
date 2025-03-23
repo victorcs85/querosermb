@@ -116,6 +116,7 @@ dependencies {
     implementation(libs.moshi.adapters)
     implementation(libs.material3)
     implementation(libs.kotlin.reflect)
+    implementation(libs.coil.compose)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

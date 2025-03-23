@@ -1,69 +1,48 @@
 package br.com.victorcs.querosermb.presentation.theme
 
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Blue
 
-
-data class AppColors(
-    val themeColors: ColorScheme,
-
-    val coinChartLineDrawer: Color = CaribbeanGreen,
-    val coinChartLineShaderGradient: List<Color> = listOf(CaribbeanGreenAlpha30, Transparent),
-    val coinChartTimeIntervalBackground: Color = Transparent,
-    val coinChartTimeIntervalBackgroundSelected: Color = CaribbeanGreen,
-    val coinChartTimeIntervalText: Color = OsloGray,
-    val coinChartTimeIntervalTextSelected: Color = White,
-    val coinInfoAppBarIconTint: Color,
-    val coinInfoSellBuyBackground: Color,
-    val coinInfoSellBuyText: Color = White,
-    val coinItemBackground: Color,
-    val coinNameText: Color,
-
-    val buttonBlueBackground: Color = TiffanyBlue,
-    val buttonRedBackground: Color = FireOpal,
-
-    val portfolioCardBackgroundGradient: List<Color> = listOf(MetallicSeaweed, TiffanyBlue),
-    val portfolioCardShadow: Color = TiffanyBlue,
-    val priceChangeButtonBackground: Color = Water,
-    val priceChangeButtonBackgroundInDetail: Color = WhiteIce,
-    val priceTextNegative: Color = FireOpal,
-    val priceTextPositive: Color = GuppieGreen,
-    val pullRefreshBackground: Color,
-    val pullRefreshContent: Color = CaribbeanGreen,
-
-    val text: Color,
-    val dialogText: Color,
-    val textSectionLink: Color = TiffanyBlue,
+data class CustomColors(
+    val appBarBackground: Color,
+    val appBarInfo: Color,
+    val pullToRefreshBackground: Color,
+    val pullToRefreshArrow: Color,
+    val exchangeTitle: Color,
+    val exchangeDetailsTitle: Color,
+    val exchangeInfo: Color,
+    val exchangeVolume: Color,
+    val exchangeBorder: Color,
+    val cardExchangesShaderGradient: List<Color>,
+    val cardExchangeDetailsShaderGradient: List<Color>
 )
 
-internal val LightColorPalette = AppColors(
-    themeColors = lightColorScheme(
-        surface = Guyabano,
-    ),
-    coinInfoAppBarIconTint = Quartz,
-    coinInfoSellBuyBackground = White,
-    coinItemBackground = White,
-    coinNameText = SonicSilver,
-    pullRefreshBackground = White,
-    text = DarkJungleGreen,
-    dialogText = Blue
+val LightCustomColors = CustomColors(
+    appBarBackground = LightAppBarBackground,
+    appBarInfo = LightAppBarInfo,
+    pullToRefreshBackground = LightPullToRefreshBackground,
+    pullToRefreshArrow = LightPullToRefreshArrow,
+    exchangeTitle = LightExchangeTitle,
+    exchangeDetailsTitle = LightExchangeDetailsTitle,
+    exchangeInfo = LightExchangeInfo,
+    exchangeVolume = LightExchangeVolume,
+    exchangeBorder = LightExchangeBorder,
+    cardExchangesShaderGradient = LightCardExchangesShaderGradient,
+    cardExchangeDetailsShaderGradient = LightCardExchangeDetailsShaderGradient
 )
 
-internal val DarkColorPalette = AppColors(
-    themeColors = darkColorScheme(
-        surface = DarkJungleGreen
-    ),
-    coinInfoAppBarIconTint = White,
-    coinInfoSellBuyBackground = DarkJungleGreen,
-    coinItemBackground = QuartzAlpha20,
-    coinNameText = LightSilver,
-    pullRefreshBackground = DarkJungleGreen,
-    text = White,
-    dialogText = White
+val DarkCustomColors = CustomColors(
+    appBarBackground = DarkAppBarBackground,
+    appBarInfo = DarkAppBarInfo,
+    pullToRefreshBackground = DarkPullToRefreshBackground,
+    pullToRefreshArrow = DarkPullToRefreshArrow,
+    exchangeTitle = DarkExchangeTitle,
+    exchangeDetailsTitle = DarkExchangeDetailsTitle,
+    exchangeInfo = DarkExchangeInfo,
+    exchangeVolume = DarkExchangeVolume,
+    exchangeBorder = DarkExchangeBorder,
+    cardExchangesShaderGradient = DarkCardExchangesShaderGradient,
+    cardExchangeDetailsShaderGradient = DarkCardExchangeDetailsShaderGradient
 )
 
-internal val LocalColors = staticCompositionLocalOf { LightColorPalette }
+val LocalCustomColors = compositionLocalOf { LightCustomColors }

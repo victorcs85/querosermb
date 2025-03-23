@@ -6,6 +6,7 @@ Dentro do prazo solicitado de 2 dias. Foram desenvolvidas:
  - Tela de detalhes do ativo selecionado.
  - Requisitos técnicos foram usados o Jetpack Compose, Retrofit, Moshi, Koin e Kotlin Flow.
  - Testes unitários para as repositories e ViewModels.
+ - Testes de UI. Usando Espresso.
  - Arquitetura MVVM com Clean Architecture.
 
 # Quero ser MB

@@ -6,10 +6,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
 
 @Composable
 fun ShowLoading() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(
+            color = LocalCustomColors.current.pullToRefreshBackground,
+            trackColor = LocalCustomColors.current.pullToRefreshArrow
+        )
     }
 }

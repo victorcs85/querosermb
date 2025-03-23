@@ -2,20 +2,46 @@ package br.com.victorcs.querosermb.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-internal val CaribbeanGreen = Color(0xFF00BDB0)
-internal val CaribbeanGreenAlpha30 = CaribbeanGreen.copy(alpha = 0.3f)
-internal val DarkJungleGreen = Color(0xFF141B29)
-internal val FireOpal = Color(0xFFF15950)
-internal val GuppieGreen = Color(0xFF10DC78)
-internal val Guyabano = Color(0xFFF8F8F8)
-internal val LightSilver = Color(0xFFD6D7D8)
-internal val MetallicSeaweed = Color(0xFF028090)
-internal val OsloGray = Color(0xFF8D9096)
-internal val Quartz = Color(0xFF484D58)
-internal val QuartzAlpha20 = Quartz.copy(alpha = 0.2f)
-internal val SonicSilver = Color(0xFF70747C)
-internal val TiffanyBlue = Color(0xFF00BFB2)
+internal val MercadoBitcoinOrange = Color(0xFFD14C0C)
+internal val MercadoBitcoinOrangeAlpha30 = MercadoBitcoinOrange.copy(alpha = 0.3f)
+internal val MercadoBitcoinOrangeAlpha80 = MercadoBitcoinOrange.copy(alpha = 0.8f)
+internal val Black = Color(0xFF000000)
 internal val Transparent = Color(0x00000000)
-internal val Water = Color(0xFFD6F5F3)
+internal val YellowGold = Color(0xFFF1D967)
 internal val White = Color(0xFFFFFFFF)
-internal val WhiteIce = Color(0xFFDBFBEC)
+
+val LightBackground = White
+val DarkBackground = Black
+
+val LightAppBarBackground = MercadoBitcoinOrange
+val DarkAppBarBackground = Black
+
+val LightAppBarInfo = White
+val DarkAppBarInfo = White
+
+val LightPullToRefreshBackground = MercadoBitcoinOrange
+val DarkPullToRefreshBackground = MercadoBitcoinOrange
+
+val LightPullToRefreshArrow = White
+val DarkPullToRefreshArrow = Black
+
+val LightExchangeTitle = White
+val DarkExchangeTitle = White
+
+val LightExchangeDetailsTitle = Black
+val DarkExchangeDetailsTitle = White
+
+val LightExchangeInfo = White
+val DarkExchangeInfo = White
+
+val LightExchangeVolume = YellowGold
+val DarkExchangeVolume = YellowGold
+
+val LightExchangeBorder = MercadoBitcoinOrangeAlpha30
+val DarkExchangeBorder = MercadoBitcoinOrangeAlpha80
+
+val LightCardExchangesShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAlpha30, Transparent)
+val DarkCardExchangesShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAlpha30, Transparent)
+
+val LightCardExchangeDetailsShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAlpha80, MercadoBitcoinOrange)
+val DarkCardExchangeDetailsShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAlpha80, MercadoBitcoinOrange)

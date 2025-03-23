@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -27,6 +25,7 @@ import br.com.victorcs.querosermb.core.extensions.orFalse
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ShowEmptyList
+import br.com.victorcs.querosermb.presentation.views.ExchangeTopAppBar
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
 import br.com.victorcs.querosermb.presentation.views.ShowLoading
 import org.koin.androidx.compose.koinViewModel
@@ -41,10 +40,13 @@ fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel 
     }
 
     Scaffold(
+//        topBar = {
+//            TopAppBar(
+//                title = { Text(text = stringResource(R.string.app_name)) },
+//            )
+//        },
         topBar = {
-            TopAppBar(
-                title = { Text(text = stringResource(R.string.app_name)) },
-            )
+            ExchangeTopAppBar(title = stringResource(R.string.app_name))
         },
         modifier = Modifier.fillMaxSize()
     ) { contentPadding ->

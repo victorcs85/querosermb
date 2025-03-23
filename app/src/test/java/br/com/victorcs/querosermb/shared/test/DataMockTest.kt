@@ -21,6 +21,7 @@ object DataMockTest {
             volume1MthUsd = 0.0,
             rank = 2,
             integrationStatus = "INTEGRATED",
+            icons = null,
             metricId = emptyList()
         ),
         Exchange(
@@ -39,6 +40,7 @@ object DataMockTest {
             volume1MthUsd = 0.0,
             rank = 2,
             integrationStatus = "INTEGRATED",
+            icons = null,
             metricId = emptyList()
         )
     )
