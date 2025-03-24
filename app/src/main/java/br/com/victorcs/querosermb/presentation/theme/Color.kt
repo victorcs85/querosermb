@@ -7,7 +7,7 @@ internal val MercadoBitcoinOrangeAlpha30 = MercadoBitcoinOrange.copy(alpha = 0.3
 internal val MercadoBitcoinOrangeAlpha80 = MercadoBitcoinOrange.copy(alpha = 0.8f)
 internal val Black = Color(0xFF000000)
 internal val Transparent = Color(0x00000000)
-internal val YellowGold = Color(0xFFF1D967)
+internal val YellowGold = Color(0xFF5E531B)
 internal val White = Color(0xFFFFFFFF)
 internal val GrayAlpha30 = Color(0x4D989898)
 internal val WhiteAlpha30 = Color(0x4DFFFFFF)

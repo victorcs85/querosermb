@@ -26,8 +26,8 @@ import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesComman
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ShowEmptyList
 import br.com.victorcs.querosermb.presentation.views.ExchangeTopAppBar
+import br.com.victorcs.querosermb.presentation.views.LoadingView
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
-import br.com.victorcs.querosermb.presentation.views.ShowLoading
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +74,7 @@ private fun ExchangesScreenContent(
     ) {
         when {
             state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
-            state.isLoading -> ShowLoading()
+            state.isLoading -> LoadingView()
             state.exchanges?.isEmpty().orFalse() -> ShowEmptyList()
             state.exchanges == null -> {}
 

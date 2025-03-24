@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
 
 @Composable
-fun ShowLoading() {
+fun LoadingView() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(
             color = LocalCustomColors.current.pullToRefreshBackground,

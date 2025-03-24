@@ -24,8 +24,8 @@ import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
 import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
 import br.com.victorcs.querosermb.presentation.views.ExchangeTopAppBar
+import br.com.victorcs.querosermb.presentation.views.LoadingView
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
-import br.com.victorcs.querosermb.presentation.views.ShowLoading
 
 @Composable
 fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetailsViewModel) {
@@ -48,7 +48,7 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
         }
     ) { contentPadding ->
         when {
-            state.isLoading -> ShowLoading()
+            state.isLoading -> LoadingView()
             state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
             exchange != null -> DetailsContent(contentPadding, exchange)
         }
@@ -101,7 +101,7 @@ private fun DetailsContent(contentPadding: PaddingValues, exchange: Exchange) {
                         )
                         HorizontalDivider(
                             thickness = 1.dp,
-                            color = LocalCustomColors.current.lightDivider
+                            color = LocalCustomColors.current.divider
                         )
                     }
                 }
