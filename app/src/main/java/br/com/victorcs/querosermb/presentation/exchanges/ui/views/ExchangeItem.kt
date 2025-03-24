@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,13 +35,11 @@ fun ExchangeItem(exchange: Exchange, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick() }
-            .background(color = LocalCustomColors.current.pullToRefreshBackground, RoundedCornerShape(8.dp))
-            .border(width = 2.dp, color = LocalCustomColors.current.exchangeBorder, shape = RoundedCornerShape(8.dp)).padding(16.dp),
+            .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = rememberAsyncImagePainter(exchange.icons?.firstOrNull()?.url.orEmpty()),
+            painter = exchange.icons?.firstOrNull()?.url?.let { rememberAsyncImagePainter(it) } ?: painterResource(id = R.drawable.logo_mb_icon_color),
             contentDescription = null,
             modifier = Modifier.size(48.dp).padding(8.dp)
         )
@@ -50,6 +49,7 @@ fun ExchangeItem(exchange: Exchange, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = stringResource(R.string.volume_one_day_usd, exchange.volume1DayUsd),
                 style = MaterialTheme.typography.bodyLarge, color = LocalCustomColors.current.exchangeVolume)
+            Spacer(modifier = Modifier.height(4.dp))
         }
         Image(
             painter = painterResource(R.drawable.chevron_right_24px),

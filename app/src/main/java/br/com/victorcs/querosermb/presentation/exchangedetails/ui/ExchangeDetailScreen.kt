@@ -1,22 +1,19 @@
 package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -79,10 +76,6 @@ private fun DetailsContent(contentPadding: PaddingValues, exchange: Exchange) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(brush = Brush.horizontalGradient(
-                        colors = LocalCustomColors.current.cardExchangeDetailsShaderGradient
-                    ))
                     .padding(16.dp)
             ) {
                 Column {
@@ -105,6 +98,10 @@ private fun DetailsContent(contentPadding: PaddingValues, exchange: Exchange) {
                             text = value,
                             modifier = Modifier.padding(bottom = 8.dp),
                             color = LocalCustomColors.current.exchangeInfo
+                        )
+                        HorizontalDivider(
+                            thickness = 1.dp,
+                            color = LocalCustomColors.current.lightDivider
                         )
                     }
                 }

@@ -9,6 +9,8 @@ internal val Black = Color(0xFF000000)
 internal val Transparent = Color(0x00000000)
 internal val YellowGold = Color(0xFFF1D967)
 internal val White = Color(0xFFFFFFFF)
+internal val GrayAlpha30 = Color(0x4D989898)
+internal val WhiteAlpha30 = Color(0x4DFFFFFF)
 
 val LightBackground = White
 val DarkBackground = Black
@@ -25,13 +27,13 @@ val DarkPullToRefreshBackground = MercadoBitcoinOrange
 val LightPullToRefreshArrow = White
 val DarkPullToRefreshArrow = Black
 
-val LightExchangeTitle = White
+val LightExchangeTitle = Black
 val DarkExchangeTitle = White
 
 val LightExchangeDetailsTitle = Black
 val DarkExchangeDetailsTitle = White
 
-val LightExchangeInfo = White
+val LightExchangeInfo = Black
 val DarkExchangeInfo = White
 
 val LightExchangeVolume = YellowGold
