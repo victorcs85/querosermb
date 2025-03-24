@@ -23,14 +23,13 @@ import br.com.victorcs.querosermb.R
 import br.com.victorcs.querosermb.core.constants.PULL_TO_REFRESH_TAG
 import br.com.victorcs.querosermb.core.extensions.orFalse
 import br.com.victorcs.querosermb.presentation.exchanges.command.ExchangesCommand
+import br.com.victorcs.querosermb.presentation.exchanges.ui.views.EmptyListView
 import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
-import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ShowEmptyList
 import br.com.victorcs.querosermb.presentation.views.ExchangeTopAppBar
 import br.com.victorcs.querosermb.presentation.views.LoadingView
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel = koinViewModel()) {
     val state = viewModel.screenState.collectAsStateWithLifecycle().value
@@ -40,11 +39,6 @@ fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel 
     }
 
     Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = stringResource(R.string.app_name)) },
-//            )
-//        },
         topBar = {
             ExchangeTopAppBar(title = stringResource(R.string.app_name))
         },
@@ -75,8 +69,8 @@ private fun ExchangesScreenContent(
         when {
             state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
             state.isLoading -> LoadingView()
-            state.exchanges?.isEmpty().orFalse() -> ShowEmptyList()
-            state.exchanges == null -> {}
+            state.exchanges?.isEmpty().orFalse() -> EmptyListView()
+            state.exchanges == null -> Unit
 
             else -> ExchangeList(state.exchanges, navController, listState)
         }
