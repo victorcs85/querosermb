@@ -60,8 +60,6 @@ class ExchangesViewModelTest : BaseViewModelTest() {
             ExchangesCommand.FetchExchanges
         )
 
-//        advanceUntilIdle()
-
         viewModel.screenState.test {
             val successResponse = awaitItem()
             assertTrue(
@@ -84,8 +82,6 @@ class ExchangesViewModelTest : BaseViewModelTest() {
         viewModel.execute(
             ExchangesCommand.FetchExchanges
         )
-
-//        advanceUntilIdle()
 
         viewModel.screenState.test {
             val failResponse = awaitItem()

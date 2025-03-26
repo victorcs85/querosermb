@@ -37,7 +37,7 @@ fun ExchangeItem(exchange: Exchange, onClick: () -> Unit) {
         Image(
             painter = exchange.icons?.firstOrNull()?.url?.let { rememberAsyncImagePainter(it) } ?: painterResource(id = R.drawable.logo_mb_icon_color),
             contentDescription = null,
-            modifier = Modifier.size(48.dp).padding(8.dp)
+            modifier = Modifier.size(48.dp).padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 16.dp)
         )
         Column(modifier = Modifier.weight(1f)) {
             Text(text = exchange.name, fontSize= 16.sp, fontWeight = FontWeight.Bold, color = LocalCustomColors.current.exchangeTitle)

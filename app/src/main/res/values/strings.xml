@@ -6,6 +6,7 @@
     <string name="exchange_details_title">Detalhes</string>
     <string name="exchange_details">Detalhes do câmbio</string>
     <string name="no_data_available">Não foram localizados dados para amostragem.</string>
+    <string name="reload">Recarregar</string>
 
     <string name="website">Website:</string>
     <string name="data_quote_start">Início da cotação de dados:</string>

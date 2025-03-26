@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.victorcs.querosermb.R
+import br.com.victorcs.querosermb.core.constants.ONE
 import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
 
 
@@ -21,7 +22,7 @@ import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
 @Composable
 fun ExchangeTopAppBar(title: String, onBackPressed: (() -> Unit)? = null) {
     TopAppBar(
-        title = { Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = LocalCustomColors.current.appBarInfo) },
+        title = { Text(text = title, maxLines = ONE, overflow = TextOverflow.Ellipsis, color = LocalCustomColors.current.appBarInfo) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = LocalCustomColors.current.appBarBackground
         ),

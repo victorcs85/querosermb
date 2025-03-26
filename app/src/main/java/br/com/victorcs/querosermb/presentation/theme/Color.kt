@@ -47,3 +47,6 @@ val DarkCardExchangesShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAl
 
 val LightCardExchangeDetailsShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAlpha80, MercadoBitcoinOrange)
 val DarkCardExchangeDetailsShaderGradient: List<Color> = listOf(MercadoBitcoinOrangeAlpha80, MercadoBitcoinOrange)
+
+val LightButtonBackground = MercadoBitcoinOrange
+val DarkButtonBackground = MercadoBitcoinOrange

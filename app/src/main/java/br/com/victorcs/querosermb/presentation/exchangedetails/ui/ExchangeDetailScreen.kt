@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +32,10 @@ import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
 fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetailsViewModel) {
     val state = viewModel.state.collectAsState().value
     val exchange = state.exchange
+    val exchangeId =
+        remember { navController.previousBackStackEntry?.arguments?.getString(EXCHANGE_ID) }
 
-    if (exchange == null && !state.isLoading) {
-        val exchangeId = navController.previousBackStackEntry?.arguments?.getString(EXCHANGE_ID)
+    if (exchange == null && state.isLoading.not()) {
         exchangeId?.let {
             viewModel.execute(ExchangeDetailsCommand.GetExchangeDetails(it))
         }
@@ -49,7 +51,21 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
     ) { contentPadding ->
         when {
             state.isLoading -> LoadingView()
-            state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
+            state.errorMessage != null -> ShowErrorMessage(
+                state.errorMessage, buttonText = stringResource(R.string.reload),
+                buttonAction =
+                {
+                    exchangeId?.let {
+                        viewModel.execute(
+                            ExchangeDetailsCommand.GetExchangeDetails(
+                                exchangeId
+                            )
+                        )
+                    }
+                },
+                modifier = null
+            )
+
             exchange != null -> DetailsContent(contentPadding, exchange)
         }
     }

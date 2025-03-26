@@ -1,5 +1,7 @@
 package br.com.victorcs.querosermb.data.source.remote.mapper
 
+import br.com.victorcs.querosermb.core.constants.ZERO
+import br.com.victorcs.querosermb.core.constants.ZERO_POINT_ZERO
 import br.com.victorcs.querosermb.core.extensions.toFormatedDate
 import br.com.victorcs.querosermb.data.source.remote.entity.ExchangeResponse
 import br.com.victorcs.querosermb.domain.mapper.DomainMapper
@@ -21,10 +23,10 @@ class ExchangeMapper : DomainMapper<ExchangeResponse, Exchange> {
                 dataTradeStart = dataTradeStart?.toFormatedDate().orEmpty(),
                 dataTradeEnd = dataTradeEnd?.toFormatedDate().orEmpty(),
                 dataSymbolsCount = dataSymbolsCount?.toString().orEmpty(),
-                volume1HrsUsd = volume1HrsUsd ?: 0.0,
-                volume1DayUsd = volume1DayUsd ?: 0.0,
-                volume1MthUsd = volume1MthUsd ?: 0.0,
-                rank = rank ?: 0,
+                volume1HrsUsd = volume1HrsUsd ?: ZERO_POINT_ZERO,
+                volume1DayUsd = volume1DayUsd ?: ZERO_POINT_ZERO,
+                volume1MthUsd = volume1MthUsd ?: ZERO_POINT_ZERO,
+                rank = rank ?: ZERO,
                 integrationStatus = integrationStatus.orEmpty(),
                 icons = icons?.map {
                     Icons(

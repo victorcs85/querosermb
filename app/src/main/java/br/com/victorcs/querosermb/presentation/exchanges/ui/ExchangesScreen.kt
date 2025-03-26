@@ -44,7 +44,7 @@ fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel 
         },
         modifier = Modifier.fillMaxSize()
     ) { contentPadding ->
-        ExchangesScreenContent(state, contentPadding, navController) {
+        ExchangesScreenContent(state, contentPadding, navController, viewModel) {
             viewModel.execute(
                 ExchangesCommand.RefreshExchanges
             )
@@ -57,6 +57,7 @@ private fun ExchangesScreenContent(
     state: ExchangesScreenState,
     contentPadding: PaddingValues,
     navController: NavController,
+    viewModel: ExchangesViewModel,
     onRefresh: () -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -67,9 +68,26 @@ private fun ExchangesScreenContent(
         modifier = Modifier.padding(contentPadding)
     ) {
         when {
-            state.errorMessage != null -> ShowErrorMessage(state.errorMessage)
+            state.errorMessage != null -> ShowErrorMessage(
+                state.errorMessage, buttonText = stringResource(R.string.reload), buttonAction =
+                {
+                    viewModel.execute(
+                        ExchangesCommand.FetchExchanges
+                    )
+                },
+                modifier = null
+            )
+
             state.isLoading -> LoadingView()
-            state.exchanges?.isEmpty().orFalse() -> EmptyListView()
+            state.exchanges?.isEmpty().orFalse() -> EmptyListView(
+                buttonText = stringResource(R.string.reload), buttonAction =
+                {
+                    viewModel.execute(
+                        ExchangesCommand.RefreshExchanges
+                    )
+                },
+                modifier = null
+            )
             state.exchanges == null -> Unit
 
             else -> ExchangeList(state.exchanges, navController, listState)
@@ -90,17 +108,18 @@ internal fun PullToRefreshWrapper(
     val refreshState = rememberPullToRefreshState()
 
     Box(
-        modifier.pullToRefresh(
-            state = refreshState,
-            isRefreshing = isRefreshing,
-            onRefresh = onRefresh,
-            enabled = enabled,
-        )
-        .testTag(PULL_TO_REFRESH_TAG),
+        modifier
+            .pullToRefresh(
+                state = refreshState,
+                isRefreshing = isRefreshing,
+                onRefresh = onRefresh,
+                enabled = enabled,
+            )
+            .testTag(PULL_TO_REFRESH_TAG),
         contentAlignment = contentAlignment,
     ) {
         content()
-        if(isRefreshing.not()) {
+        if (isRefreshing.not()) {
             Indicator(
                 modifier = Modifier.align(Alignment.TopCenter),
                 isRefreshing = isRefreshing,
