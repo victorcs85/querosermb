@@ -1,6 +1,7 @@
 package br.com.victorcs.querosermb.domain.model
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -24,9 +25,10 @@ data class Exchange(
     val metricId: List<String>
 ) : Parcelable
 
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Icon(
     val exchangeId: String,
-    val assetId: String,
+    val assetId: String?,
     val url: String
 ) : Parcelable

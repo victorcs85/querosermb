@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 val localProperties = Properties().apply {
@@ -117,6 +118,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.kotlin.reflect)
     implementation(libs.coil.compose)
+    ksp(libs.moshi.kotlin.codegen)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

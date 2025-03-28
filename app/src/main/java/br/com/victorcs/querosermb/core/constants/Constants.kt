@@ -7,6 +7,7 @@ const val ERROR_MESSAGE = "Ocorreu um erro ao buscar os dados!"
 const val NETWORK_ERROR = "Sem conexão. Verifique e tente novamente."
 const val PULL_TO_REFRESH_TAG = "pullToRefresh"
 const val EXCHANGE_ID = "exchangeId"
+const val EXCHANGE_ICON = "exchangeIcon"
 const val ICON_MAPPER = "ICON_MAPPER"
 
 const val ZERO = 0

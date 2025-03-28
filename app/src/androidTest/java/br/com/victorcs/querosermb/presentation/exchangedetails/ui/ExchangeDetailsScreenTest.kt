@@ -3,7 +3,6 @@ package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.rememberNavController
@@ -17,7 +16,6 @@ import br.com.victorcs.querosermb.utils.TestDispatchersProvider
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule

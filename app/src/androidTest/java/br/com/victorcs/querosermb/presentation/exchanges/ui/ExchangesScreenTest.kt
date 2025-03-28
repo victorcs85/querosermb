@@ -18,11 +18,9 @@ import br.com.victorcs.querosermb.utils.TestDispatchersProvider
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.test.KoinTest
 
 @ExperimentalCoroutinesApi
 @MediumTest

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">querosermb</string>
+    <string name="app_name">Cryptodroid</string>
     <string name="exchange_id">ID: %1$s</string>
     <string name="volume_one_day_usd">Volume 1 dia USD: %1$f</string>
     <string name="back_button">Voltar</string>

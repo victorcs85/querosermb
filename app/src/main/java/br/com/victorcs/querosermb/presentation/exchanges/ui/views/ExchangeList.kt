@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.com.victorcs.querosermb.core.constants.EXCHANGE_ICON
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.presentation.theme.LocalCustomColors
 import com.squareup.moshi.Moshi
@@ -36,7 +37,9 @@ fun ExchangeList(
             key = { exchanges[it].exchangeId },
             itemContent = { index ->
                 val exchange = exchanges[index]
+
                 ExchangeItem(exchange) {
+                    navController.currentBackStackEntry?.savedStateHandle?.set(EXCHANGE_ICON, exchange.icons?.first())
                     navController.navigate("details/${exchange.exchangeId}")
                 }
                 if (index < exchanges.lastIndex)
