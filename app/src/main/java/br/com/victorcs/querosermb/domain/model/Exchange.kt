@@ -20,12 +20,12 @@ data class Exchange(
     val volume1MthUsd: Double,
     val rank: Int,
     val integrationStatus: String,
-    val icons: List<Icons>?,
+    var icons: List<Icon>?,
     val metricId: List<String>
 ) : Parcelable
 
 @Parcelize
-data class Icons(
+data class Icon(
     val exchangeId: String,
     val assetId: String,
     val url: String

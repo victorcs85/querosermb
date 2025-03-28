@@ -2,16 +2,20 @@ package br.com.victorcs.querosermb.di
 
 import androidx.lifecycle.SavedStateHandle
 import br.com.victorcs.querosermb.core.constants.API_URL
+import br.com.victorcs.querosermb.core.constants.ICON_MAPPER
 import br.com.victorcs.querosermb.core.interceptor.ConnectivityInterceptor
 import br.com.victorcs.querosermb.core.services.WifiService
 import br.com.victorcs.querosermb.data.source.remote.CoinAPI
 import br.com.victorcs.querosermb.data.source.remote.RetrofitConfig
 import br.com.victorcs.querosermb.data.source.remote.entity.ExchangeResponse
+import br.com.victorcs.querosermb.data.source.remote.entity.IconResponse
+import br.com.victorcs.querosermb.data.source.remote.mapper.ExchangeIconMapper
 import br.com.victorcs.querosermb.data.source.remote.mapper.ExchangeMapper
 import br.com.victorcs.querosermb.data.source.remote.repository.ExchangeDetailsRepositoryImpl
 import br.com.victorcs.querosermb.data.source.remote.repository.ExchangesRepositoryImpl
 import br.com.victorcs.querosermb.domain.mapper.DomainMapper
 import br.com.victorcs.querosermb.domain.model.Exchange
+import br.com.victorcs.querosermb.domain.model.Icon
 import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.domain.repository.IExchangesRepository
 import br.com.victorcs.querosermb.presentation.exchangedetails.ui.ExchangeDetailsViewModel
@@ -23,6 +27,7 @@ import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -65,7 +70,8 @@ class CoinInitialization : ModuleInitialization() {
         single<IExchangesRepository>() {
             ExchangesRepositoryImpl(
                 service = get(),
-                mapper = get()
+                mapper = get(),
+                iconMapper = get(named(ICON_MAPPER))
             )
         }
         single<IExchangeDetailsRepository>() {
@@ -80,6 +86,7 @@ class CoinInitialization : ModuleInitialization() {
     //region Mappers
     private val mappersModule = module {
         single<DomainMapper<ExchangeResponse, Exchange>> { ExchangeMapper() }
+        single<DomainMapper<IconResponse, Icon>>(named(ICON_MAPPER)) { ExchangeIconMapper() }
     }
     //endregion
 

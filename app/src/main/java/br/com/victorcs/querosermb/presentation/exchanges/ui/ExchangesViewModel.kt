@@ -3,7 +3,6 @@ package br.com.victorcs.querosermb.presentation.exchanges.ui
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import br.com.victorcs.querosermb.core.base.BaseViewModel
-import br.com.victorcs.querosermb.core.constants.ERROR_MESSAGE
 import br.com.victorcs.querosermb.core.constants.NETWORK_ERROR
 import br.com.victorcs.querosermb.core.constants.STOP_TIMER_LIMIT
 import br.com.victorcs.querosermb.domain.model.Exchange
@@ -18,7 +17,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import timber.log.Timber
 
 class ExchangesViewModel(
     private val repository: IExchangesRepository,
@@ -34,12 +32,17 @@ class ExchangesViewModel(
                 exchanges = (state as? Response.Success)?.data ?: emptyList(),
                 isRefreshing = isRefreshing,
                 isLoading = state is Response.Loading,
-                errorMessage = if(state is Response.Error && state.errorMessage.contains(
-                        NETWORK_ERROR)) {
-                    NETWORK_ERROR } else (state as? Response.Error)?.errorMessage
+                errorMessage = if (state is Response.Error && state.errorMessage.contains(
+                        NETWORK_ERROR
+                    )
+                ) {
+                    NETWORK_ERROR
+                } else (state as? Response.Error)?.errorMessage
             )
         }
-        .onStart { fetchExchanges() }
+        .onStart {
+            fetchExchanges()
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(STOP_TIMER_LIMIT),
@@ -53,16 +56,20 @@ class ExchangesViewModel(
 
     private fun fetchExchanges() {
         launch {
-            try {
-                _state.value = Response.Loading
-                val exchanges = repository.getExchanges()
-                _state.value = exchanges
-            } catch (e: Exception) {
-                Timber.e(e)
-                _state.value = Response.Error(ERROR_MESSAGE)
-            } finally {
-                _isRefreshing.value = false
+            _state.value = Response.Loading
+            val exchanges = repository.getExchanges()
+            val icons = repository.getIcons()
+
+            if (exchanges is Response.Success && icons is Response.Success) {
+                exchanges.data.forEach { exchange ->
+                    exchange.icons = icons.data.filter { icon ->
+                        icon.exchangeId == exchange.exchangeId
+                    }
+                }
             }
+
+            _state.value = exchanges
+            _isRefreshing.value = false
         }
     }
 
