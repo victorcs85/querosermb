@@ -12,12 +12,10 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import br.com.victorcs.querosermb.R
 import br.com.victorcs.querosermb.core.constants.PULL_TO_REFRESH_TAG
@@ -28,15 +26,13 @@ import br.com.victorcs.querosermb.presentation.exchanges.ui.views.ExchangeList
 import br.com.victorcs.querosermb.presentation.views.ExchangeTopAppBar
 import br.com.victorcs.querosermb.presentation.views.LoadingView
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel = koinViewModel()) {
-    val state = viewModel.screenState.collectAsStateWithLifecycle().value
-
-    LaunchedEffect(state.exchanges == null && state.errorMessage == null) {
-        viewModel.execute(ExchangesCommand.FetchExchanges)
-    }
+fun ExchangesScreen(
+    navController: NavController,
+    state: ExchangesScreenState,
+    execute: (ExchangesCommand) -> Unit
+) {
 
     Scaffold(
         topBar = {
@@ -44,8 +40,8 @@ fun ExchangesScreen(navController: NavController, viewModel: ExchangesViewModel 
         },
         modifier = Modifier.fillMaxSize()
     ) { contentPadding ->
-        ExchangesScreenContent(state, contentPadding, navController, viewModel) {
-            viewModel.execute(
+        ExchangesScreenContent(state, contentPadding, navController, execute) {
+            execute(
                 ExchangesCommand.RefreshExchanges
             )
         }
@@ -57,7 +53,7 @@ private fun ExchangesScreenContent(
     state: ExchangesScreenState,
     contentPadding: PaddingValues,
     navController: NavController,
-    viewModel: ExchangesViewModel,
+    execute: (ExchangesCommand) -> Unit,
     onRefresh: () -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -71,7 +67,7 @@ private fun ExchangesScreenContent(
             state.errorMessage != null -> ShowErrorMessage(
                 state.errorMessage, buttonText = stringResource(R.string.reload), buttonAction =
                 {
-                    viewModel.execute(
+                    execute(
                         ExchangesCommand.FetchExchanges
                     )
                 },
@@ -82,12 +78,13 @@ private fun ExchangesScreenContent(
             state.exchanges?.isEmpty().orFalse() -> EmptyListView(
                 buttonText = stringResource(R.string.reload), buttonAction =
                 {
-                    viewModel.execute(
+                    execute(
                         ExchangesCommand.RefreshExchanges
                     )
                 },
                 modifier = null
             )
+
             state.exchanges == null -> Unit
 
             else -> ExchangeList(state.exchanges, navController, listState)

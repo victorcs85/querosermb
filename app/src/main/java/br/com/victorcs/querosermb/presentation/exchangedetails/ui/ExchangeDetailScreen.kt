@@ -3,6 +3,7 @@ package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -12,8 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,16 +29,14 @@ import br.com.victorcs.querosermb.presentation.views.LoadingView
 import br.com.victorcs.querosermb.presentation.views.ShowErrorMessage
 
 @Composable
-fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetailsViewModel) {
-    val state = viewModel.state.collectAsState().value
+fun ExchangeDetailScreen(
+    navController: NavController,
+    state: ExchangeDetailsScreenState,
+    execute: (ExchangeDetailsCommand) -> Unit
+) {
     val exchange = state.exchange
-    val exchangeId =
-        remember { navController.previousBackStackEntry?.arguments?.getString(EXCHANGE_ID) }
-
-    if (exchange == null && state.isLoading.not()) {
-        exchangeId?.let {
-            viewModel.execute(ExchangeDetailsCommand.GetExchangeDetails(it))
-        }
+    val exchangeId = rememberSaveable() {
+        navController.previousBackStackEntry?.arguments?.getString(EXCHANGE_ID).orEmpty()
     }
 
     Scaffold(
@@ -53,15 +51,12 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
             state.isLoading -> LoadingView()
             state.errorMessage != null -> ShowErrorMessage(
                 state.errorMessage, buttonText = stringResource(R.string.reload),
-                buttonAction =
-                {
-                    exchangeId?.let {
-                        viewModel.execute(
-                            ExchangeDetailsCommand.GetExchangeDetails(
-                                exchangeId
-                            )
+                buttonAction = {
+                    execute(
+                        ExchangeDetailsCommand.GetExchangeDetails(
+                            exchangeId
                         )
-                    }
+                    )
                 },
                 modifier = null
             )
@@ -75,6 +70,7 @@ fun ExchangeDetailScreen(navController: NavController, viewModel: ExchangeDetail
 private fun DetailsContent(contentPadding: PaddingValues, exchange: Exchange) {
     Box(
         modifier = Modifier
+            .fillMaxSize()
             .padding(contentPadding)
             .padding(16.dp)
     ) {

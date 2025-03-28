@@ -11,3 +11,4 @@ const val EXCHANGE_ID = "exchangeId"
 const val ZERO = 0
 const val ONE = 1
 const val ZERO_POINT_ZERO = 0.0
+const val STOP_TIMER_LIMIT = 5000L

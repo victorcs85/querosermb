@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.victorcs.querosermb.core.base.BaseViewModel
 import br.com.victorcs.querosermb.core.constants.ERROR_MESSAGE
 import br.com.victorcs.querosermb.core.constants.NETWORK_ERROR
+import br.com.victorcs.querosermb.core.constants.STOP_TIMER_LIMIT
 import br.com.victorcs.querosermb.domain.model.Exchange
 import br.com.victorcs.querosermb.domain.model.Response
 import br.com.victorcs.querosermb.domain.repository.ExchangesResponse
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import timber.log.Timber
 
@@ -37,10 +39,11 @@ class ExchangesViewModel(
                     NETWORK_ERROR } else (state as? Response.Error)?.errorMessage
             )
         }
+        .onStart { fetchExchanges() }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = ExchangesScreenState()
+            started = SharingStarted.WhileSubscribed(STOP_TIMER_LIMIT),
+            initialValue = ExchangesScreenState().copy(isLoading = true)
         )
 
     fun execute(command: ExchangesCommand) = when (command) {

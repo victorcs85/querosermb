@@ -17,14 +17,16 @@ import br.com.victorcs.querosermb.shared.test.PresentationMockTest
 import br.com.victorcs.querosermb.utils.TestDispatchersProvider
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 
+@ExperimentalCoroutinesApi
 @MediumTest
-class ExchangesScreenTest : KoinTest {
+class ExchangesScreenTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -35,16 +37,16 @@ class ExchangesScreenTest : KoinTest {
 
     @Before
     fun setUp() {
-        viewModel = ExchangesViewModel(repository, TestDispatchersProvider)
         coEvery { repository.getExchanges() } returns PresentationMockTest.mockSuccessExchangeResponse
+        viewModel = ExchangesViewModel(repository, TestDispatchersProvider)
 
         composeTestRule.activity.setContent {
-            ExchangesScreen(navController = rememberNavController(), viewModel = viewModel)
+            ExchangesScreen(navController = rememberNavController(), ExchangesScreenState(), execute = viewModel::execute)
         }
     }
 
     @Test
-    fun givenScreen_whenLoadedData_thenSuccessfullyData() = runTest {
+    fun givenScreen_whenLoadedData_thenSuccessfullyData()  {
         viewModel.execute(ExchangesCommand.FetchExchanges)
 
         composeTestRule.run {
@@ -54,7 +56,7 @@ class ExchangesScreenTest : KoinTest {
     }
 
     @Test
-    fun whenPullToRefresh_thenDataIsUpdated() = runTest {
+    fun whenPullToRefresh_thenDataIsUpdated()  {
         coEvery { repository.getExchanges() } returns PresentationMockTest.mockSuccessExchangeResponse
 
         composeTestRule.run {

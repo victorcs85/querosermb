@@ -1,5 +1,6 @@
 package br.com.victorcs.querosermb.di
 
+import androidx.lifecycle.SavedStateHandle
 import br.com.victorcs.querosermb.core.constants.API_URL
 import br.com.victorcs.querosermb.core.interceptor.ConnectivityInterceptor
 import br.com.victorcs.querosermb.core.services.WifiService
@@ -90,10 +91,11 @@ class CoinInitialization : ModuleInitialization() {
                 dispatchers = get()
             )
         }
-        viewModel {
+        viewModel { (savedStateHandle: SavedStateHandle) ->
             ExchangeDetailsViewModel(
                 repository = get(),
-                dispatchers = get()
+                dispatchers = get(),
+                savedStateHandle = savedStateHandle
             )
         }
     }

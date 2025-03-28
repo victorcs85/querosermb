@@ -1,10 +1,12 @@
 package br.com.victorcs.querosermb.presentation.exchangedetails.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.filters.SmallTest
 import app.cash.turbine.test
 import br.com.victorcs.querosermb.base.BaseViewModelTest
 import br.com.victorcs.querosermb.base.CoroutineTestRule
+import br.com.victorcs.querosermb.core.constants.EXCHANGE_ID
 import br.com.victorcs.querosermb.domain.repository.IExchangeDetailsRepository
 import br.com.victorcs.querosermb.presentation.exchangedetails.command.ExchangeDetailsCommand
 import br.com.victorcs.querosermb.shared.test.DataMockTest
@@ -34,6 +36,8 @@ class ExchangeDetailsViewModelTest : BaseViewModelTest() {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
+    private val savedState = SavedStateHandle(mapOf(EXCHANGE_ID to UUID.randomUUID().toString()))
+
     private val repository: IExchangeDetailsRepository = mockk(relaxed = true)
 
     private lateinit var viewModel: ExchangeDetailsViewModel
@@ -50,7 +54,7 @@ class ExchangeDetailsViewModelTest : BaseViewModelTest() {
 
     @Test
     fun givenExchangeId_whenGetDetails_thenReturnSuccessfully() = runTest {
-        viewModel = ExchangeDetailsViewModel(repository, testDispatcherProvider)
+        viewModel = ExchangeDetailsViewModel(repository, savedState, testDispatcherProvider)
         val mockResponse = DataMockTest.mockSuccessExchangeDetailsResponse
 
         coEvery { repository.getExchangeDetails(any<String>()) } returns mockResponse
@@ -59,7 +63,7 @@ class ExchangeDetailsViewModelTest : BaseViewModelTest() {
             ExchangeDetailsCommand.GetExchangeDetails(UUID.randomUUID().toString())
         )
 
-        viewModel.state.test {
+        viewModel.screenState.test {
             val successResponse = awaitItem()
             assertTrue(
                 successResponse.exchange != null &&
@@ -73,7 +77,7 @@ class ExchangeDetailsViewModelTest : BaseViewModelTest() {
 
     @Test
     fun givenWrongExchangeId_whenGetDetails_thenReturnFail() = runTest {
-        viewModel = ExchangeDetailsViewModel(repository, testDispatcherProvider)
+        viewModel = ExchangeDetailsViewModel(repository, savedState, testDispatcherProvider)
         coEvery { repository.getExchangeDetails(any<String>()) } throws IllegalArgumentException(
             DataMockTest.DEFAULT_ERROR_MOCK
         )
@@ -82,7 +86,7 @@ class ExchangeDetailsViewModelTest : BaseViewModelTest() {
             ExchangeDetailsCommand.GetExchangeDetails(UUID.randomUUID().toString())
         )
 
-        viewModel.state.test {
+        viewModel.screenState.test {
             val failResponse = awaitItem()
             assertTrue(
                 failResponse.exchange == null &&
